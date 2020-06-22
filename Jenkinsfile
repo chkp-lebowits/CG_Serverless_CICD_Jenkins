@@ -1,17 +1,20 @@
 pipeline {
     agent any
     environment {
-        DOME9TOKEN  = credentials('D9API') //'D9API' is stored as secured text, the value is "cloudguardAccessToken": "your-api-key-id:your-api-key-secret"
+        DOME9TOKEN  = credentials('D9API') //'D9API' is stored as secured text, the value is 
+//                                          "cloudguardAccessToken": "your-api-key-id:your-api-key-secret"
         AWS_DEFAULT_REGION =  'us-east-1' //required for the region where the functions are to be deployed
-        AWS_ACCESS_KEY_ID = credentials('AWS_KEY')
+        AWS_ACCESS_KEY_ID = credentials('AWS_KEY') //these will be needed to be set as environment variable
+//                                                   for the Cloudguard CLI running environment
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET')
     }
     stages {
-        stage('Assess'){ //this "Assess" stage is where we do the static analysis. you can choose your own
+        stage('Assess'){ //this "Assess" stage is where we do the static analysis. you can choose your own name 
+//                           for the stage
             steps {
-//                sh 'cloudguard --version' this is a good step when you develope the pipeline. this will make sure that the 
-//                      cloudguard cli is already installed. Alternatively you can install it on the agent, as long as the 
-//                      agent has docker and npm by using the following command:
+//                sh 'cloudguard --version' this is a good step when you develope the pipeline. this will make 
+//                sure that the cloudguard cli is already installed. Alternatively you can install it on the agent,
+//                 as long as the agent has docker and npm by using the following command:
 //                      "npm install -g https://artifactory.app.protego.io/cloudguard-serverless-plugin.tgz"
 		        sh 'cd $WORKSPACE' //generally superfluous but just in case
                 sh 'git checkout ${BRANCH_NAME}' 
