@@ -21,6 +21,7 @@ To build this example, I
 2) I added the annotated [Jenkinsfile](/Jenkinsfile) to the repo, commited and pushed it
 3) added working github credentials to Jenkins
 4) created a new pipepline of type "multibranch pipeline" where the scm source is my github clone repo, with the crendeials from step 1. (I used the "git" SCM plugin but you can just as well use "github")
+![Alt setting up source](/Readmepics/scm.JPG?raw=true "scm setup")
 5) I let the pipeline file name stay "Jenkinsfile", but you can change it
    
 ![Alt setting up source](/Readmepics/pipelinesettings.JPG?raw=true "pipeline setup")
