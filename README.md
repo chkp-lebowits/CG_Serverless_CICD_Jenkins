@@ -16,8 +16,18 @@ In here, we're going to provide an annotated example of a Jenkinsfile that imple
 
 ## setting up jenkins
 
-To build this example i cloned [the protego-example repo](https://github.com/dome9/protego-examples) that provides the information required about the cli itself. I also changed the remote on my local copies to be my own repo in github.
-I then 
-1) added working github credentials to Jenkins
-2) created a new item of type "multibranch pipeline" where the scm source is my github clone repo, with the crendeials from step 1
-![Alt setting up source](/Readmepics/scm.JPG?raw=true "account setup")   
+To build this example, I 
+1) cloned [the protego-example repo](https://github.com/dome9/protego-examples) that provides the information required about the cli itself. (I also made sure to change the remote on my local copies to be my own repo in github.
+2) I added the annotated [Jenkinsfile](/Jenkinsfile) to the repo, commited and pushed it
+3) added working github credentials to Jenkins
+4) created a new pipepline of type "multibranch pipeline" where the scm source is my github clone repo, with the crendeials from step 1. (I used the "git" SCM plugin but you can just as well use "github")
+5) I let the pipeline file name stay "Jenkinsfile", but you can change it
+   
+![Alt setting up source](/Readmepics/pipelinesettings.JPG?raw=true "pipeline setup")
+
+and that's about it
+
+
+
+## setting up the pipeline
+See the accompanying [Jenkinsfile](/Jenkinsfile) for detailed explanation of the pipeline itself
