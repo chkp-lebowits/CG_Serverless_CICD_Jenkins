@@ -19,10 +19,11 @@ In here, we're going to provide an annotated example of a Jenkinsfile that imple
 To build this example, I 
 1) cloned [the protego-example repo](https://github.com/dome9/protego-examples) that provides the information required about the cli itself. (I also made sure to change the remote on my local copies to be my own repo in github.
 2) I added the annotated [Jenkinsfile](/Jenkinsfile) to the repo, commited and pushed it
-3) added working github credentials to Jenkins
-4) created a new pipepline of type "multibranch pipeline" where the scm source is my github clone repo, with the crendeials from step 1. (I used the "git" SCM plugin but you can just as well use "github")
+3) Using "npm install -g https://artifactory.app.protego.io/cloudguard-serverless-plugin.tgz", I installed the Cloudguard CLI on the Jenkins server. An alternative (mentioned within the [Jenkinsfile](/Jenkinsfile) comments) is to install it as a step within the pipeline, or within a dockerized jenkins agent
+4) added working github credentials to Jenkins
+5) created a new pipepline of type "multibranch pipeline" where the scm source is my github clone repo, with the crendeials from step 1. (I used the "git" SCM plugin but you can just as well use "github")
 ![Alt setting up source](/Readmepics/scm.JPG?raw=true "scm setup")
-5) I let the pipeline file name stay "Jenkinsfile", but you can change it
+6) I let the pipeline file name stay "Jenkinsfile", but you can change it
    
 ![Alt setting up source](/Readmepics/pipelinesettings.JPG?raw=true "pipeline setup")
 

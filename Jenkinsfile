@@ -12,7 +12,7 @@ pipeline {
 //                sh 'cloudguard --version' this is a good step when you develope the pipeline. this will make sure that the 
 //                      cloudguard cli is already installed. Alternatively you can install it on the agent, as long as the 
 //                      agent has docker and npm by using the following command:
-//                      npm install -g https://artifactory.app.protego.io/cloudguard-serverless-plugin.tgz
+//                      "npm install -g https://artifactory.app.protego.io/cloudguard-serverless-plugin.tgz"
 		        sh 'cd $WORKSPACE' //generally superfluous but just in case
                 sh 'git checkout ${BRANCH_NAME}' 
                 sh 'git pull' //jenkins doesn't seem to pull the whole branch so just in case
@@ -24,6 +24,8 @@ pipeline {
 // currently the official release requires cloudguard CLI to run in an environment that has docker. alternatively you can
 // add the currently experimental --no-docker flag to the command, which will cause the cli to run usermode udocker.
 // for details about the input file (cloudguard.yml) see https://github.com/protegolabs/protego-examples/blob/master/proact/cloudguard/template/cloudguard.yml                
+// Based on the settings in the cloudguard.yml, the CLI will decide whether the assessment passed or failed. it will pass it as stdout. Jenkins will automatically 
+// understand this and will pass or fail this stage accordingly.
             }
             post{  
                 success{ //clouduard proact outputs its results to <workspace>/cloudguard-output folder, and is thus made 
