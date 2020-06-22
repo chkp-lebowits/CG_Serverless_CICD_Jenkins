@@ -20,4 +20,4 @@ To build this example i cloned [the protego-example repo](https://github.com/dom
 I then 
 1) added working github credentials to Jenkins
 2) created a new item of type "multibranch pipeline" where the scm source is my github clone repo, with the crendeials from step 1
-![Alt setting up source](Readmepics/scm.jpg?raw=true "account setup")   
+![Alt setting up source](/Readmepics/scm.jpg?raw=true "account setup")   
