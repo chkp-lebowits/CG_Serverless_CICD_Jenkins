@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         DOME9TOKEN  = credentials('D9API') //'D9API' is stored as secured text, the value is 
-//                                          "your-api-key-id:your-api-key-secret"
+//                                          your-api-key-id:your-api-key-secret
         AWS_DEFAULT_REGION =  'us-east-1' //required for the region where the functions are to be deployed
         AWS_ACCESS_KEY_ID = credentials('AWS_KEY') //these will be needed to be set as environment variable
 //                                                   for the Cloudguard CLI running environment
