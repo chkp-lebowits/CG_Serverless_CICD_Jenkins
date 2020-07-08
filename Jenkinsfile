@@ -1,22 +1,24 @@
 pipeline {
     agent any
     environment {
-        DOME9TOKEN  = credentials('D9API') //'D9API' is stored as secured text, the value is 
-//                                          your-api-key-id:your-api-key-secret
+        DOME9TOKEN  = credentials('D9API') //'D9API' is stored as secured text, the value is your-api-key-id:your-api-key-secret
         AWS_DEFAULT_REGION =  'us-east-1' //required for the region where the functions are to be deployed
-        AWS_ACCESS_KEY_ID = credentials('AWS_KEY') //these will be needed to be set as environment variable
-//                                                   for the Cloudguard CLI running environment
+        AWS_ACCESS_KEY_ID = credentials('AWS_KEY')
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET')
+        GIT_EMAIL = credentials('MY_GIT_EMAIL')
     }
     stages {
-        stage('Assess'){ //this "Assess" stage is where we do the static analysis. you can choose your own name 
-//                           for the stage
+        stage('Assess'){ //this "Assess" stage is where we do the static analysis. you can choose your own
             steps {
-//                sh 'cloudguard --version' this is a good step when you develope the pipeline. this will make 
-//                sure that the cloudguard cli is already installed. Alternatively you can install it on the agent,
-//                 as long as the agent has docker and npm by using the following command:
-//                      "npm install -g https://artifactory.app.protego.io/cloudguard-serverless-plugin.tgz"
-		        sh 'cd $WORKSPACE' //generally superfluous but just in case
+//                sh 'cloudguard --version' this is a good step when you develope the pipeline. this will make sure that the 
+//                      cloudguard cli is already installed. Alternatively you can install it on the agent, as long as the 
+//                      agent has docker and npm by using the following command:
+//                      npm install -g https://artifactory.app.protego.io/cloudguard-serverless-plugin.tgz
+                sh 'cd $WORKSPACE' //generally superfluous but just in case
+                sh 'git config --global user.email $GIT_EMAIL' 
+                withCredentials([usernamePassword(credentialsId: 'newgithub', passwordVariable: 'PASSW', usernameVariable: 'USER')]) {
+                    sh 'git config --global user.name ${USER}'
+                } //quirks relating to the ability to commit and push later on. "newgithub" is the id of a github username/password credentials stored in Jenkins
                 sh 'git checkout ${BRANCH_NAME}' 
                 sh 'git pull' //jenkins doesn't seem to pull the whole branch so just in case
                 sh 'export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION' //here and below, setting up the appropriate env variables 
@@ -27,8 +29,6 @@ pipeline {
 // currently the official release requires cloudguard CLI to run in an environment that has docker. alternatively you can
 // add the currently experimental --no-docker flag to the command, which will cause the cli to run usermode udocker.
 // for details about the input file (cloudguard.yml) see https://github.com/protegolabs/protego-examples/blob/master/proact/cloudguard/template/cloudguard.yml                
-// Based on the settings in the cloudguard.yml, the CLI will decide whether the assessment passed or failed. it will pass it as stdout. Jenkins will automatically 
-// understand this and will pass or fail this stage accordingly.
             }
             post{  
                 success{ //clouduard proact outputs its results to <workspace>/cloudguard-output folder, and is thus made 
